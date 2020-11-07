@@ -34,7 +34,6 @@ public class ReportsShowServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO Auto-generated method stub
         EntityManager em = DBUtil.createEntityManager();
 
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
