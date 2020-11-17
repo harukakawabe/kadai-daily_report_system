@@ -3,14 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:if test="${errors != null}">
-  <div id="flush_error">
-    入力内容にエラーがあります。<br />
-    <c:forEach var="error" items="${errors}">
-            ・<c:out value="${error}" />
-      <br />
-    </c:forEach>
+    <div id="flush_error">
+        入力内容にエラーがあります。<br />
+        <c:forEach var="error" items="${errors}">
+            ・<c:out value="${error}" /><br />
+        </c:forEach>
 
-  </div>
+    </div>
 </c:if>
 <label for="report_date">日付</label>
 <br />
@@ -36,6 +35,23 @@
 <textarea name="content" rows="10" cols="50">${report.content}</textarea>
 <br />
 <br />
+
+<label for="attendance_time">出勤時間</label>
+<br />
+<input type="time" name="attendance_time"
+  value="<fmt:formatDate value='${report.attendance_time }' pattern='HH:mm:ss'/>" />
+<br />
+<br />
+
+
+<label for="attendance_time">退勤時間</label>
+<br />
+<input type="time" name="leave_time"
+  value="<fmt:formatDate value='${report.leave_time }' pattern='HH:mm:ss'/>" />
+<br />
+<br />
+
+
 
 <input type="hidden" name="_token" value="${_token}" />
 <button type="submit">投稿</button>
