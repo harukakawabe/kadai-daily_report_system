@@ -3,14 +3,17 @@ package models;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -56,14 +59,31 @@ public class Report {
     @Column(name = "leave_time", nullable = false)
     private Time leave_time;
 
+    @ManyToMany( mappedBy = "my_favorite_report_list", fetch = FetchType.EAGER)
+    /*mappedBy 非所有者側のエンティティの属性
+     *  = "my_favorite_report_list" 所有者側のエンティティで非所有者側のエンティティを参照するために設定したプロパティ
+     */
+    private List<Employee> favorited_employee_list;
+
+
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+
     }
 
+
+    public List<Employee> getFavorited_employee_list() {
+        return favorited_employee_list;
+    }
+
+    public void setFavorited_employee_list(List<Employee> favorited_employee_list) {
+        this.favorited_employee_list = favorited_employee_list;
+    }
 
     public Time getAttendance_time() {
         return attendance_time;

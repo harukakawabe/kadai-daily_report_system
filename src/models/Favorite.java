@@ -13,23 +13,33 @@ import javax.persistence.Table;
 
 @Table(name = "favorites")
 @NamedQueries({
-        @NamedQuery(name = "getFavoritesOfAttension", query = "SELECT f FROM Favorite AS f WHERE f.employee=:employee AND f.report=:report") })
+        @NamedQuery(name = "getFavoritesOfAttention",
+                query = "SELECT f FROM Favorite AS f WHERE f.employee=:employee AND f.report=:report"),
+        //いいねの件数をカウントする
+        @NamedQuery(name = "getFavoritesCount",
+                query = "SELECT COUNT(f) FROM Favorite AS f WHERE f.report=:report"),
+        //日報にいいねした人を表示する
+        /*@NamedQuery(name="getFavoritesNames",
+                query="SELECT f FROM Favorite AS f WHERE f.report=:report"),*/
+        @NamedQuery(name = "getFavoritesOfAttension",
+        query = "SELECT f FROM Favorite AS f WHERE f.employee=:employee AND f.report=:report")
+})
 
 @Entity
 public class Favorite {
     @Id
-    @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    //Employeeモデルと多対1で結びつく
+    // Employeeモデルと多対1で結びつく
     @ManyToOne
-    @JoinColumn(name="employee_id", nullable=false)
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    //Reportモデルと多対1で結びつく
+    // Reportモデルと多対1で結びつく
     @ManyToOne
-    @JoinColumn(name="report_id" ,nullable=false)
+    @JoinColumn(name = "report_id", nullable = false)
     private Report report;
 
     public Integer getId() {
@@ -56,6 +66,4 @@ public class Favorite {
         this.report = report;
     }
 
-
 }
-

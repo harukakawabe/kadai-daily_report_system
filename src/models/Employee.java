@@ -1,12 +1,17 @@
 package models;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -44,12 +49,31 @@ public class Employee {
     @Column(name = "delete_flag", nullable = false)
     private Integer delete_flag;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="favorites", joinColumns = @JoinColumn( name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name="report_id"))
+    /*@JoinTable            所有者側のエンティティに記載するアノテーション
+     * (name="favorites",   結合するテーブル名？（今回は中間テーブル）
+     * joinColumns = @JoinColumn( name = "employee_id"),  所有者側のエンティティに対応する中間テーブルの外部キー
+     * inverseJoinColumns = @JoinColumn(name="report_id")) 非所有者側のエンティティに対応する中間テーブルの外部キー
+     * */
+    private List<Report> my_favorite_report_list;
+
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<Report> getMy_favorite_report_list() {
+        return my_favorite_report_list;
+    }
+
+    public void setMy_favorite_report_list(List<Report> my_favorite_report_list) {
+        this.my_favorite_report_list = my_favorite_report_list;
     }
 
     public String getCode() {
